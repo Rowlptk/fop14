@@ -32,7 +32,7 @@ void main() {
 
 }
 
-
+/*
 
 prime number ==>  user ==> 13 ==> prime number
 ==> 15 ==> not a prime number
@@ -40,7 +40,7 @@ prime number ==>  user ==> 13 ==> prime number
 
 
 // generate prime number from 50 to 100;
-
+*/
 
 
 
