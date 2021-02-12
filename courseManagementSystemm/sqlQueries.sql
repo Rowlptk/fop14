@@ -1,7 +1,10 @@
+CREATE USER 'courseManager'@'localhost' IDENTIFIED BY 'courseManager';
+GRANT ALL PRIVILEGES ON * . * TO 'courseManager'@'localhost';
 
-drop schema course_manager;
 create schema course_manager;
+
 use course_manager;
+
 create table AdministratorAccounts (
 	id varchar(24),
     lastname varchar(30),
@@ -44,7 +47,6 @@ insert into StudentAccounts(id, lastname, firstname, username, password)
 values ('101', 'Bist', 'Madhur', 's1', 'pass'),
 ('102', 'Stark', 'Tony', 's2', 'pass2');
 
-
 select * from StudentAccounts;
 
 create table course (
@@ -68,11 +70,11 @@ create table modules (
 select * from modules;
 
 
-insert into course(course_code,course_name,course_sem)
-values('BIT', 'Bachelor In Information Technology', 8);
+-- insert into course(course_code,course_name,course_sem)
+-- values('BIT', 'Bachelor In Information Technology', 8);
 
-insert into modules(course_id,module_sem,module_name)
-values(1, 1, 'C Programming'),(1, 1, 'JAVA'),(1, 1, 'Web Development'),(1, 1, 'DBMS');
+-- insert into modules(course_id,module_sem,module_name)
+-- values(1, 1, 'C Programming'),(1, 1, 'JAVA'),(1, 1, 'Web Development'),(1, 1, 'DBMS');
 
 
 create table studentRegisterForCourse
@@ -83,13 +85,13 @@ create table studentRegisterForCourse
     student_contact bigint unique not null,
     student_address varchar(100),
     current_sem int default 1,
-    student_table_name varchar(30),
-    FOREIGN KEY (course_id) REFERENCES course(course_id) on update cascade on delete cascade
-);
+		student_table_name varchar(30),
+		FOREIGN KEY (course_id) REFERENCES course(course_id) on update cascade on delete cascade
+	);
 
-select * from studentRegisterForCourse
-;
-select * from StudBEX101;
+	select * from studentRegisterForCourse
+	;
+-- 	select * from StudBEX101;
 
 create table instuctor_module
 (
@@ -98,6 +100,38 @@ create table instuctor_module
     module_id int
 );
 
+select * from instuctor_module;
+-- truncate table instuctor_module;
+
+-- Select A.module_id, C.module_name, A.student_id , B.firstname, B.lastname,A.module_marks from 
+-- Studbit101 A 
+-- join 
+-- StudentAccounts B
+-- on A.student_id = B.id
+-- join
+-- modules C
+-- on A.module_id = C.module_id
+-- where teacher_id = 101;
+
+
+-- -- truncate table modules;
+-- select * from modules;
+-- select * from course;
+
+-- select * from studentregisterforcourse;
+-- select * from studbit101;
+
+
+-- select A.student_id, student_name, module_id, module_name, module_sem, module_marks
+-- from studbit101 A
+-- join
+-- studentregisterforcourse
+
+
+-- alter table studentregisterforcourse drop index student_contact;
+-- set foreign_key_checks = 0;
+-- truncate table studbit101;
+-- set foreign_key_checks = 1;
 -- insert into StudBEX101(student_id, module_id, module_sem) values(101, 13, 1);-- 
 
 -- delete C from course C inner join modules M on C.course_id = M.course_id where C.course_id = 1;

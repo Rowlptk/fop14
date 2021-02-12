@@ -5,8 +5,11 @@ import com.course.database.Database;
 import javax.xml.crypto.Data;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Scanner;
 
 public class InstructorAccount extends Account {
+
+    private Scanner s = new Scanner(System.in);
 
     public InstructorAccount() {
 
@@ -47,15 +50,43 @@ public class InstructorAccount extends Account {
         return ret;
     }
 
+    public void instructorMenu() {
+        System.out.println("Press: \n1.Assign Module to Teach\n2. List student assigned\n3. Add marks to Students\n4. Exit");
+        int opt = s.nextInt();
+        switch(opt) {
+            case 1:
+                instructorForModule();
+                break;
+            case 2:
+                listAllStudentWithModules();
+                break;
+            case 3:
+                listAllStudentWithModules();
+                assignMarksToStudent(enterStudentId(),enterModuleID(),enterMarks());
+                break;
+            case 4:
+                System.exit(0);
+            default:
+                System.out.println("Invalid Option");
+                instructorMenu();
+        }
+    }
+
 
     public void instructorForModule() {
+        Course course = new Course();
+        Modules module = new Modules();
         int ins_id = Integer.parseInt(this.id);
+        course.listAllCourses();
+        int course_id = enterCourseID();
+        module.loadAllModules(course_id);
+        int module_id = enterModuleID();
         String sql = "insert into instuctor_module(instructor_id, course_id, module_id) values (?, ?, ?)";
         try {
             pstmt = Database.getConnection().prepareStatement(sql);
             pstmt.setInt(1,ins_id);
-            pstmt.setInt(2, 4);
-            pstmt.setInt(3, 14);
+            pstmt.setInt(2, course_id);
+            pstmt.setInt(3, module_id);
             pstmt.executeUpdate();
         } catch(SQLException ex) {
             ex.printStackTrace();
@@ -63,14 +94,41 @@ public class InstructorAccount extends Account {
 
     }
 
+    public int enterCourseID() {
+        int courseId = 0;
+        System.out.println("Enter Course Id : ");
+        courseId = s.nextInt();
+        return courseId;
+    }
+
+    public int enterModuleID() {
+        int moduleId = 0;
+        System.out.println("Enter Module Id : ");
+        moduleId = s.nextInt();
+        return moduleId;
+    }
+
     public void listAllStudentWithModules() {
         StudentAccount stud = new StudentAccount();
         int ins_id = Integer.parseInt(this.id);
         for(String table : stud.fetchAllStudentTable()) {
-//            System.out.println(table);
             listAllStudentAssigned(table);
         }
-        assignMarksToStudent(101,14,45);
+//        assignMarksToStudent(enterStudentId(),enterModuleID(),enterMarks());
+    }
+
+    public int enterStudentId() {
+        int stud_id = 0;
+        System.out.println("Enter Student Id : ");
+        stud_id = s.nextInt();
+        return stud_id;
+    }
+
+    public int enterMarks() {
+        int marks = 0;
+        System.out.println("Enter Mark : ");
+        marks = s.nextInt();
+        return marks;
     }
 
     public void listAllStudentAssigned(String table_name) {
@@ -88,9 +146,9 @@ public class InstructorAccount extends Account {
             pstmt = Database.getConnection().prepareStatement(sql);
             pstmt.setInt(1,ins_id);
             ResultSet rs = pstmt.executeQuery();
-//            System.out.println("Module Id\tModule Name\t\t\t\tStudent ID\t\t\tName");
             while(rs.next()) {
-                System.out.println(rs.getInt(1) + "\t\t\t" + rs.getString(2) + "\t\t\t" +rs.getInt(3) + "\t\t\t" + rs.getString(4) + "\t" +rs.getString(5));
+                System.out.println("Moduleid==>"+ rs.getInt(1) + " ModuleName==>" + rs.getString(2) + " StudentId==>"
+                        +rs.getInt(3) + " StudentName==> " + rs.getString(4) + " " +rs.getString(5));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();

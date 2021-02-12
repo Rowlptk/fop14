@@ -11,11 +11,6 @@ public class cmsMain {
     public static Scanner s = new Scanner(System.in);
 
     public static void main(String[] args) {
-//        AdministratorAccount test = new AdministratorAccount();
-//        test.setUserName("admin");
-//        test.setPassword("pass");
-//        test.validateAdministrator();
-//        System.out.println(test.getFirstName() + " " + test.getLastName());
         mainMenu();
     }
 
@@ -40,9 +35,7 @@ public class cmsMain {
                 ins.setLoginInfo(getStaticUsername(), getStaticPassword());
                 if(ins.isInDatabase()) {
                     System.out.println("Welcome " + ins.getFirstName() + " " + ins.getLastName());
-//                    ins.instructorForModule();
-                    ins.listAllStudentWithModules();
-//                    ins.listAllStudentAssigned();
+                    ins.instructorMenu();
                 } else {
                     System.out.println("username or password is incorrect!");
                     mainMenu();
@@ -53,11 +46,7 @@ public class cmsMain {
                 stud.setLoginInfo(getStaticUsername(), getStaticPassword());
                 if(stud.isInDatabase()) {
                     System.out.println("Welcome " + stud.getFirstName() + " " + stud.getLastName());
-                    //stud.studentRegisterForCourse();
-//                    stud.fetchStudentTable(101);
-//                    stud.enrollModule();
-                    stud.chooseTeacherForCurrentModules();
-//                    stud.fetchAllStudentTable();
+                    stud.studentMenu();
                 } else {
                     System.out.println("username or password is incorrect!");
                     mainMenu();

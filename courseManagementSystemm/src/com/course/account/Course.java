@@ -77,6 +77,7 @@ public class Course {
                 System.out.println("Press Y to add more : ");
                 proceed = s.nextLine();
             } while (proceed.equals("Y"));
+            System.out.println("Modules Added!");
         } else {
             System.out.println("Course Code " + courseCode + " doesnot exist!");
         }
@@ -197,7 +198,7 @@ public class Course {
     }
 
     public void listAllCourses() {
-        String sql = "select * from course";
+        String sql = "select * from course where is_active = 1";
         try {
             pstmt = Database.getConnection().prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
@@ -225,6 +226,7 @@ public class Course {
     private int enterId() {
         System.out.println("Enter Module Id : ");
         int moduleId = s.nextInt();
+        s.nextLine();
         return moduleId;
     }
 }

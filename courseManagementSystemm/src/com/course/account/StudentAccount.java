@@ -2,7 +2,6 @@ package com.course.account;
 
 import com.course.database.Database;
 
-import javax.xml.crypto.Data;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -63,34 +62,82 @@ public class StudentAccount extends Account{
         }
     }
 
+    public void studentMenu() {
+        System.out.println("Press: \n1.Register Into Course\n2. Enroll Modules\n3. Choose Teacher\n4. Exit\n Select : ");
+        int opt = s.nextInt();
+        switch(opt) {
+            case 1:
+                studentRegisterForCourse();
+                break;
+            case 2:
+                enrollModule();
+                break;
+            case 3:
+                chooseTeacherForCurrentModules();
+                break;
+            case 4:
+                System.exit(0);
+            default:
+                System.out.println("Invalid Option!");
+                studentMenu();
+        }
+    }
+
     public void studentRegisterForCourse() {
         String table_name;
+        s.nextLine();
+        String course_code = getCourseCode();
+        long mobileNumber = getNumber();
+        String address = getAddress();
         Course course = new Course();
         int id = Integer.parseInt(this.id);
-        if(course.checkCourseCodeInDB("BEX")) {
-            table_name = "Stud"+"BEX"+this.id;
+        if(course.checkCourseCodeInDB(course_code)) {
+            table_name = "Stud"+course_code+this.id;
             String sql = "insert into studentRegisterForCourse(student_id,course_id,student_contact,student_address,student_table_name)" +
                         "values(?, ?, ?, ?, ?)";
             try {
                 pstmt = Database.getConnection().prepareStatement(sql);
                 pstmt.setInt(1, id);
                 pstmt.setInt(2, course.getCourseId());
-                pstmt.setLong(3, 9801200115L);
-                pstmt.setString(4,"Baneswor,Kathmandu");
+                pstmt.setLong(3, mobileNumber);
+                pstmt.setString(4,address);
                 pstmt.setString(5, table_name);
                 pstmt.executeUpdate();
                 createStudentTable(table_name);
+                System.out.println("Registered!");
             } catch(SQLException ex) {
                 ex.printStackTrace();
             }
         }
     }
 
+    public long getNumber() {
+        long number = 0;
+        System.out.println("Enter Your mobile number : ");
+        number = s.nextLong();
+        s.nextLine();
+        return number;
+    }
+
+    public String getCourseCode() {
+        String course_code = "";
+        System.out.println("Enter Course Code : ");
+        course_code = s.nextLine();
+        return course_code;
+    }
+
+    public String getAddress() {
+        String address = "";
+        System.out.println("Enter Your Address : ");
+        address = s.nextLine();
+        return address;
+    }
+
     public void enrollModule() {
         int stud_id = Integer.parseInt(this.id);
         int course_id = fetchRegisteredCourseId();
         int sem = fetchCurrentSem();
-        for (Integer module_id : fetchModuleIDForSem(course_id)) {
+        for (Integer module_id : fetchModuleIDForSem(course_id, sem)) {
             System.out.println(stud_id + " " + course_id + " " + sem + " " + module_id);
             insertModulesIntoStudentTables(stud_id, module_id, sem);
         }
@@ -159,12 +206,13 @@ public class StudentAccount extends Account{
     }
 
 
-    public ArrayList<Integer> fetchModuleIDForSem(int courseId) {
+    public ArrayList<Integer> fetchModuleIDForSem(int courseId, int sem) {
         ArrayList<Integer> module_list = new ArrayList<>();
-        String sql = "select module_id from modules where course_id = ?";
+        String sql = "select module_id from modules where course_id = ? and module_sem = ?";
         try {
             pstmt = Database.getConnection().prepareStatement(sql);
             pstmt.setInt(1, courseId);
+            pstmt.setInt(2,sem);
             ResultSet rs = pstmt.executeQuery();
             while(rs.next()) {
                 module_list.add(rs.getInt(1));
@@ -236,5 +284,18 @@ public class StudentAccount extends Account{
             ex.printStackTrace();
         }
         return course_id;
+    }
+
+    public void fetchAllRegisteredStudents() {
+        String sql = "select B.firstname, B.lastname, A.student_id from studentRegisterForCourse A join studentAccounts B on A.student_id = B.id";
+        try {
+            pstmt = Database.getConnection().prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()) {
+                System.out.println(rs.getInt(3) + " " +rs.getString(1) + " " + rs.getString(2));
+            }
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 }
