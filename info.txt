@@ -1,0 +1,26 @@
+full stack
+
+front-end
+HTML, CSS, javaScript(Advanced) ==> Class & Object
+
+BootStrap, materialize, Bulma, tailwind
+
+framework==> js ==> react, Angular, Vue.js
+
+
+database ==> sql ==> 80% code similar
+sql  => mySQl
+
+
+backend ==> Asp.Net(C#) => SQL SERVER, php, JAVA(spring), Python(Django/Flask), Node.js 
+==>api
+
+// javascript
+MEAN stack ==> js => mongoDb, ExpressJs, Angular, Node
+MERN ==> mongoDb, ExpressJs, React, Node
+
+
+// youtube channels
+// freetutorials.com
+
+

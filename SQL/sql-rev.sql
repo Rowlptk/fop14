@@ -123,5 +123,71 @@ values(10002, 'Bir Aspatal'),
 select * from doctors
 
 
+create table herald
+(
+	id int primary key,
+	name varchar(100),
+	course varchar(10)
+)
+
+insert into herald(id, name, course) values (101, 'Madhur', 'BIT'),
+(102, 'Nirajan', 'BIT'),(103,'Ram', 'BIT'),(104,'Shyam', 'BCA')
+
+select * from herald
+
+create table sports
+(
+	stud_id int foreign key references herald(id),
+	sports varchar(20)
+)
+
+insert into sports(stud_id, sports) values 
+(101, 'football'), (101, 'cricket'), (102, 'Tennis'), (102, 'football'), (104, 'Tennis')
+
+select * from sports
+select * from herald
+
+-- error
+insert into sports(stud_id, sports) values (105, 'football')
+
+-- join
+select A.name, A.course, B.sports
+from herald A
+join
+sports B
+on A.id = B.stud_id
+
+
+-- view
+create view mySports as
+select A.name, A.course, B.sports
+from herald A
+join
+sports B
+on A.id = B.stud_id
+
+select * from mySports
+
+-- order by
+select * from herald order by id desc
+
+-- Aggregate
+select Count(id) from herald
+select SUM(id) from herald
+select AVg(id) from herald
+select MAX(id) from herald
+select min(id) from herald
+
+-- exception handling
+begin try
+	insert into herald(id, name, course) values (100000234567890, 'x', 'y');
+end try
+begin catch
+	print 'Some Internal Error'
+end catch;
+
+
+
+
 
 
