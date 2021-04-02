@@ -24,6 +24,71 @@ p {
     margin: 10px 0;
 }
 
+/* utility class */
+.container {
+    /* border: 2px red solid; */
+    max-width: 1100px;
+    margin:auto;
+    overflow: auto;
+    padding: 0 20px;
+}
+
+.text-primary {
+    color:#f7c08a;
+}
+
+.lead {
+    font-size: 20px;
+}
+
+.btn {
+    display: inline-block;
+    color: #fff;
+    font-size: 18px;
+    background: #333;
+    padding: 13px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: #f7c08a;
+    color:#333;
+}
+
+.btn-light {
+    background: #f4f4f4;
+    color: #333;
+}
+
+.bg-dark {
+    background: #333;
+    color: #fff;
+}
+
+.bg-light {
+    background: #f4f4f4;
+    color: #333;
+}
+
+.bg-primary {
+    background: #f7c08a;
+    color: #333;
+}
+
+/* padding: 1px; all sides */
+/* padding: 2px 3px;  v, h */
+/* padding: 1px 2px 3px 4px;   top, right, bottom, left */
+/* same for margin */
+
+
+/* block ==> full width;h1,h2
+inline ==> compressed ==> padding, margin, width, height
+inline-block ==> hybrid */
+
+
+
+
 /* Navbar */
 #navbar {
     background: #333;
@@ -62,12 +127,66 @@ p {
 }
 
 
+/* Showcase */
+#showcase {
+    background: url('../img/showcase.jpg') no-repeat center center/cover;
+    height: 600px;
+}
 
+#showcase .showcase-content {
+    color: #fff;
+    text-align: center;
+    padding-top: 170px;
+}
 
+#showcase .showcase-content h1 {
+    font-size: 60px;
+    line-height: 1.2em;
+}
 
+#showcase .showcase-content p {
+    padding-bottom: 20px;
+    line-height: 1.7em;
+}
 
+/* Home Info */
+#home-info {
+    height: 450px;
+}
 
+#home-info .info-img{
+    width: 50%;
+    float: left;
+    background: url('../img/photo-1.jpg') no-repeat;
+    min-height: 100%;
+}
 
+#home-info .info-content {
+    width: 50%;
+    float: right;
+    height: 100%;
+    text-align: center;
+    padding: 50px 30px;
+    overflow: hidden;
+}
 
+#home-info .info-content p {
+    padding-bottom: 30px;
+}
 
+/* Features */
+.box {
+    float: left;
+    width: 33.3%;
+    padding: 50px;
+    text-align: center;
+}
 
+.box i {
+    margin-bottom: 10px;
+}
+
+/* Footer */
+#main-footer {
+    background: #444;
+}
